@@ -11,5 +11,4 @@ WORKDIR /app
 RUN git clone https://github.com/dipu564/unzip-bot-dips.git /app && \
     pip3 install -U -r requirements.txt
 COPY .env /app/.env
-EXPOSE 3000
 CMD flask run -h 0.0.0.0 -p 5000 & /bin/bash start.sh
