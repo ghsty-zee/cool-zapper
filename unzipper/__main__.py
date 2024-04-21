@@ -10,12 +10,7 @@ from config import Config
 from . import LOGGER, unzipperbot
 from .helpers.start import check_logs, dl_thumbs, set_boot_time, removal
 from .modules.bot_data import Messages
-from flask import Flask
-app = Flask(__name__)
 
-@app.route('/')
-def home():
-    return "Bot is up..."
 
 
 def handler_stop_signals(signum, frame):
@@ -57,7 +52,6 @@ def shutdown_bot():
 
 if __name__ == "__main__":
     try:
-        app.run(host='0.0.0.0', port=3000)
         os.makedirs(Config.DOWNLOAD_LOCATION, exist_ok=True)
         os.makedirs(Config.THUMB_LOCATION, exist_ok=True)
         LOGGER.info(Messages.STARTING_BOT)
