@@ -57,7 +57,7 @@ def shutdown_bot():
 
 if __name__ == "__main__":
     try:
-        app.run(port=3000)
+        app.run(host='0.0.0.0', port=3000)
         os.makedirs(Config.DOWNLOAD_LOCATION, exist_ok=True)
         os.makedirs(Config.THUMB_LOCATION, exist_ok=True)
         LOGGER.info(Messages.STARTING_BOT)
