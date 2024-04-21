@@ -11,10 +11,10 @@ class Config:
     BOT_OWNER = int(os.environ.get("BOT_OWNER"))
     DOWNLOAD_LOCATION = f"{os.path.dirname(__file__)}/Downloaded"
     THUMB_LOCATION = f"{os.path.dirname(__file__)}/Thumbnails"
-    TG_MAX_SIZE = 2097152000
+    TG_MAX_SIZE = 4294967296
     MAX_MESSAGE_LENGTH = 4096
     # Default chunk size (0.005 MB → 1024*6) Increase if you need faster downloads
-    CHUNK_SIZE = 1024 * 1024 * 10  # 10 MB
+    CHUNK_SIZE = 1024 * 1024 * 20  # 10 MB
     BOT_THUMB = f"{os.path.dirname(__file__)}/bot_thumb.jpg"
     MAX_CONCURRENT_TASKS = 75
     MAX_TASK_DURATION_EXTRACT = 720 * 60  # 45 minutes (in seconds)
