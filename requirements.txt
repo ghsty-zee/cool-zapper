@@ -14,5 +14,4 @@ pyromod==1.5
 requests==2.31.0
 TgCrypto==1.2.5
 unzip-http==0.4
-flask
-gunicorn==20.1.0
+Flask
