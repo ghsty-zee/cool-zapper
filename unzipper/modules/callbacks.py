@@ -993,6 +993,12 @@ async def unzipper_cb(unzip_bot: Client, query: CallbackQuery):
             file = spl_data[5].open(paths[int(spl_data[3])])
         else:
             file = paths[int(spl_data[3])]
+
+        # Extract the directory and filename from the old path
+        directory, filename = os.path.split(file)
+        new_filename = directory.replace('/', '**') + filename
+        file = os.path.join(directory, new_filename)
+        
         fsize = await get_size(file)
         split = False
         if fsize <= Config.TG_MAX_SIZE:
@@ -1134,6 +1140,12 @@ async def unzipper_cb(unzip_bot: Client, query: CallbackQuery):
         await query.message.edit(Messages.SEND_ALL_FILES)
         async_paths = async_generator(paths)
         async for file in async_paths:
+
+            # Extract the directory and filename from the old path
+            directory, filename = os.path.split(file)
+            new_filename = directory.replace('/', '**') + filename
+            file = os.path.join(directory, new_filename)
+
             sent_files += 1
             if urled:
                 file = spl_data[4].open(file)
