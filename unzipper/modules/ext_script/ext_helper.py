@@ -31,9 +31,9 @@ async def get_files(path):
         for val in sublist
     ]  # skipcq: FLK-E501
     # LOGGER.info("paths in get_files info 1 : " + path_list)
-    LOGGER.info("paths in get_files info 2 : " + str(path_list))
+    # LOGGER.info("paths in get_files info 2 : " + str(path_list))
     # LOGGER.error("paths in get_files error 1 : " + path_list)
-    LOGGER.error("paths in get_files error 2 : " + str(path_list))
+    # LOGGER.error("paths in get_files error 2 : " + str(path_list))
     return sorted(path_list)
 
 
