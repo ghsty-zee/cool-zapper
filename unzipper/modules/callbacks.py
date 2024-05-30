@@ -1121,7 +1121,7 @@ async def unzipper_cb(unzip_bot: Client, query: CallbackQuery):
         user_id = query.from_user.id
         spl_data = query.data.split("|")
         file_path = f"{Config.DOWNLOAD_LOCATION}/{spl_data[1]}/extracted"
-        LOGGER.info("HASH HASH paths : " + str(file_path))
+        LOGGER.info("HASH HASH paths : " + file_path)
         # await rename_files_with_full_path(directory=ext_files_dir)
         try:
             urled = spl_data[4] if isinstance(spl_data[3], bool) else False
@@ -1132,7 +1132,7 @@ async def unzipper_cb(unzip_bot: Client, query: CallbackQuery):
         else:
             paths = await get_files(path=file_path)
         LOGGER.info("ext_a paths line no 1134: " + str(paths))
-        LOGGER.info("HASH HASH ext_a paths : " + str(file_path))
+        LOGGER.info("HASH HASH ext_a paths : " + file_path)
         
         if not paths and not urled:
             try:
