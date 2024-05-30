@@ -11,6 +11,16 @@ from pyrogram.types import InlineKeyboardButton
 from unzipper import LOGGER
 from unzipper.modules.bot_data import Messages
 
+async def rename_files_with_full_path(directory):
+    LOGGER.info("HASH HASH directory : " + str(directory))
+    for root, dirs, files in os.walk(directory):
+        for filename in files:
+            old_filepath = os.path.join(root, filename)
+            new_filename = f"{root.replace('/', '!|!').replace(' ', '_')}!|!{filename}"
+            new_filepath = os.path.join(root, new_filename)
+            LOGGER.info("HASH HASH new_filepath : " + str(new_filepath))
+            os.rename(old_filepath, new_filepath)
+
 
 # Get files in directory as a list
 async def get_files(path):
