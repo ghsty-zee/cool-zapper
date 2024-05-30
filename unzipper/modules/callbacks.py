@@ -61,11 +61,13 @@ rar_file_pattern = r"\.part\d+\.rar$"
 telegram_url_pattern = r"(?:http[s]?:\/\/)?(?:www\.)?t\.me\/([a-zA-Z0-9_]+)\/(\d+)"
 
 def rename_files_with_full_path(directory):
+    LOGGER.info("HASH HASH directory : " + str(directory))
     for root, dirs, files in os.walk(directory):
         for filename in files:
             old_filepath = os.path.join(root, filename)
             new_filename = f"{root.replace('/', '!|!').replace(' ', '_')}!|!{filename}"
             new_filepath = os.path.join(root, new_filename)
+            LOGGER.info("HASH HASH new_filepath : " + str(new_filepath))
             os.rename(old_filepath, new_filepath)
 
 async def download(url, path):
@@ -1119,7 +1121,8 @@ async def unzipper_cb(unzip_bot: Client, query: CallbackQuery):
         user_id = query.from_user.id
         spl_data = query.data.split("|")
         file_path = f"{Config.DOWNLOAD_LOCATION}/{spl_data[1]}/extracted"
-        rename_files_with_full_path(file_path)
+        LOGGER.info("HASH HASH paths : " + str(file_path))
+        rename_files_with_full_path(directory=file_path)
         try:
             urled = spl_data[4] if isinstance(spl_data[3], bool) else False
         except:
