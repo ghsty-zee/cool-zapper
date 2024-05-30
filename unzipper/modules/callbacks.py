@@ -998,6 +998,7 @@ async def unzipper_cb(unzip_bot: Client, query: CallbackQuery):
         directory, filename = os.path.split(file)
         new_filename = directory.replace('/', '**') + filename
         file = os.path.join(directory, new_filename)
+        LOGGER.info("HASH HASH HASH file : " + str(file))
         
         fsize = await get_size(file)
         split = False
@@ -1145,6 +1146,7 @@ async def unzipper_cb(unzip_bot: Client, query: CallbackQuery):
             directory, filename = os.path.split(file)
             new_filename = directory.replace('/', '**') + filename
             file = os.path.join(directory, new_filename)
+            LOGGER.info("HASH HASH HASH file : " + str(file))
 
             sent_files += 1
             if urled:
