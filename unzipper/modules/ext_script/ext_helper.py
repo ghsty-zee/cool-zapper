@@ -24,11 +24,16 @@ async def rename_files_with_full_path(directory):
 
 # Get files in directory as a list
 async def get_files(path):
+    await rename_files_with_full_path(path)
     path_list = [
         val
         for sublist in [[os.path.join(i[0], j) for j in i[2]] for i in os.walk(path)]
         for val in sublist
     ]  # skipcq: FLK-E501
+    LOGGER.info("paths in get_files info 1 : " + path_list)
+    LOGGER.info("paths in get_files info 2 : " + str(path_list))
+    LOGGER.error("paths in get_files error 1 : " + path_list)
+    LOGGER.error("paths in get_files error 2 : " + str(path_list))
     return sorted(path_list)
 
 
