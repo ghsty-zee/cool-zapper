@@ -1128,6 +1128,7 @@ async def unzipper_cb(unzip_bot: Client, query: CallbackQuery):
         else:
             paths = await get_files(path=file_path)
         LOGGER.info("ext_a paths : " + str(paths))
+        
         if not paths and not urled:
             try:
                 shutil.rmtree(f"{Config.DOWNLOAD_LOCATION}/{spl_data[1]}")
@@ -1138,6 +1139,15 @@ async def unzipper_cb(unzip_bot: Client, query: CallbackQuery):
                 text=Messages.NO_FILE_LEFT, reply_markup=Buttons.RATE_ME
             )
             return
+        renamed_paths = []
+        for path in paths:
+            directory, filename = os.path.split(path)
+            new_filename = directory.replace('/', '**') + filename
+            renamed_path = os.path.join(directory, new_filename)
+            LOGGER.info("renamed path : " + str(renamed_path))
+            renamed_paths.append(renamed_path)
+        paths = renamed_paths;
+        LOGGER.info("ext_a renamed paths : " + str(paths))
         await query.message.edit(Messages.SEND_ALL_FILES)
         async_paths = async_generator(paths)
         async for file in async_paths:
