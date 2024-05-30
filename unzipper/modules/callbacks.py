@@ -53,6 +53,7 @@ from .ext_script.ext_helper import (
     make_keyboard_empty,
     merge_files,
     split_files,
+    rename_files_with_full_path,
 )
 from .ext_script.up_helper import answer_query, get_size, send_file, send_url_logs
 
@@ -60,15 +61,7 @@ split_file_pattern = r"\.(?:z\d+|r\d{2})$"
 rar_file_pattern = r"\.part\d+\.rar$"
 telegram_url_pattern = r"(?:http[s]?:\/\/)?(?:www\.)?t\.me\/([a-zA-Z0-9_]+)\/(\d+)"
 
-def rename_files_with_full_path(directory):
-    LOGGER.info("HASH HASH directory : " + str(directory))
-    for root, dirs, files in os.walk(directory):
-        for filename in files:
-            old_filepath = os.path.join(root, filename)
-            new_filename = f"{root.replace('/', '!|!').replace(' ', '_')}!|!{filename}"
-            new_filepath = os.path.join(root, new_filename)
-            LOGGER.info("HASH HASH new_filepath : " + str(new_filepath))
-            os.rename(old_filepath, new_filepath)
+
 
 async def download(url, path):
     try:
@@ -269,6 +262,7 @@ async def unzipper_cb(unzip_bot: Client, query: CallbackQuery):
         await answer_query(query, Messages.CHANGED_UPLOAD_MODE_TXT.format(mode))
 
     elif query.data == "merge_this":
+        LOGGER.info("merge_this query : " + query.data)
         user_id = query.from_user.id
         m_id = query.message.id
         start_time = time()
@@ -349,6 +343,7 @@ async def unzipper_cb(unzip_bot: Client, query: CallbackQuery):
                 pass
 
     elif query.data.startswith("merged"):
+        LOGGER.info("merged query : " + query.data)
         user_id = query.from_user.id
         download_path = f"{Config.DOWNLOAD_LOCATION}/{user_id}/merge"
         ext_files_dir = f"{Config.DOWNLOAD_LOCATION}/{user_id}/extracted"
@@ -412,7 +407,11 @@ async def unzipper_cb(unzip_bot: Client, query: CallbackQuery):
                 await del_ongoing_task(user_id)
             return
         # Check if user was dumb 😐
+        LOGGER.info("ext_files_dir.. : " + ext_files_dir)
+        await rename_files_with_full_path(directory=ext_files_dir)
         paths = await get_files(path=ext_files_dir)
+        LOGGER.info("paths in merged elif.. : " + str(paths))
+
         if not paths:
             await unzip_bot.send_message(
                 chat_id=query.message.chat.id,
@@ -491,6 +490,7 @@ async def unzipper_cb(unzip_bot: Client, query: CallbackQuery):
                     return
 
     elif query.data.startswith("extract_file"):
+        LOGGER.info("extract_file query : " + query.data)
         user_id = query.from_user.id
         start_time = time()
         await add_ongoing_task(user_id, start_time, "extract")
@@ -972,7 +972,7 @@ async def unzipper_cb(unzip_bot: Client, query: CallbackQuery):
                 await archive_msg.reply(err)
 
     elif query.data.startswith("ext_f"):
-        LOGGER.info(query.data)
+        LOGGER.info("ext_f query : " + query.data)
         user_id = query.from_user.id
         spl_data = query.data.split("|")
         file_path = f"{Config.DOWNLOAD_LOCATION}/{spl_data[1]}/extracted"
@@ -1117,12 +1117,12 @@ async def unzipper_cb(unzip_bot: Client, query: CallbackQuery):
         await update_uploaded(user_id, upload_count=sent_files)
 
     elif query.data.startswith("ext_a"):
-        LOGGER.info(query.data)
+        LOGGER.info("ext_a query : " + query.data)
         user_id = query.from_user.id
         spl_data = query.data.split("|")
         file_path = f"{Config.DOWNLOAD_LOCATION}/{spl_data[1]}/extracted"
         LOGGER.info("HASH HASH paths : " + str(file_path))
-        rename_files_with_full_path(directory=file_path)
+        await rename_files_with_full_path(directory=ext_files_dir)
         try:
             urled = spl_data[4] if isinstance(spl_data[3], bool) else False
         except:
@@ -1132,6 +1132,7 @@ async def unzipper_cb(unzip_bot: Client, query: CallbackQuery):
         else:
             paths = await get_files(path=file_path)
         LOGGER.info("ext_a paths : " + str(paths))
+        LOGGER.info("HASH HASH ext_a paths : " + str(file_path))
         
         if not paths and not urled:
             try:
