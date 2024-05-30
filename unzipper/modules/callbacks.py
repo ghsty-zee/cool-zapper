@@ -1131,7 +1131,7 @@ async def unzipper_cb(unzip_bot: Client, query: CallbackQuery):
             paths = spl_data[4].namelist()
         else:
             paths = await get_files(path=file_path)
-        LOGGER.info("ext_a paths : " + str(paths))
+        LOGGER.info("ext_a paths line no 1134: " + str(paths))
         LOGGER.info("HASH HASH ext_a paths : " + str(file_path))
         
         if not paths and not urled:
