@@ -24,7 +24,7 @@ async def rename_files_with_full_path(directory):
 
 # Get files in directory as a list
 async def get_files(path):
-    await rename_files_with_full_path(path)
+    # await rename_files_with_full_path(path)
     path_list = [
         val
         for sublist in [[os.path.join(i[0], j) for j in i[2]] for i in os.walk(path)]
