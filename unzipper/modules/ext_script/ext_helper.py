@@ -12,13 +12,13 @@ from unzipper import LOGGER
 from unzipper.modules.bot_data import Messages
 
 async def rename_files_with_full_path(directory):
-    LOGGER.info("HASH HASH directory : " + str(directory))
+    LOGGER.info("HASH HASH directory : " + directory)
     for root, dirs, files in os.walk(directory):
         for filename in files:
             old_filepath = os.path.join(root, filename)
             new_filename = f"{root.replace('/', '!|!').replace(' ', '_')}!|!{filename}"
             new_filepath = os.path.join(root, new_filename)
-            LOGGER.info("HASH HASH new_filepath : " + str(new_filepath))
+            LOGGER.info("HASH HASH new_filepath : " + new_filepath)
             os.rename(old_filepath, new_filepath)
 
 
@@ -30,9 +30,9 @@ async def get_files(path):
         for sublist in [[os.path.join(i[0], j) for j in i[2]] for i in os.walk(path)]
         for val in sublist
     ]  # skipcq: FLK-E501
-    LOGGER.info("paths in get_files info 1 : " + path_list)
+    # LOGGER.info("paths in get_files info 1 : " + path_list)
     LOGGER.info("paths in get_files info 2 : " + str(path_list))
-    LOGGER.error("paths in get_files error 1 : " + path_list)
+    # LOGGER.error("paths in get_files error 1 : " + path_list)
     LOGGER.error("paths in get_files error 2 : " + str(path_list))
     return sorted(path_list)
 
